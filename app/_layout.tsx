@@ -1,39 +1,42 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import { ScrollView, View } from "react-native";
+import Container from "@/components/container/Container";
+import DynamicHeader from "@/components/header/Header";
+import { CombinedTheme } from "@/constants/Colors";
+import { Stack, usePathname } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "react-native-paper"; 
+import SplashScreenComponent from "../components/splashScreen/SplashScreen";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const pathname = usePathname();
+  const [hideNav, setHideNav] = useState<boolean>(false);
+  const [isAppReady, setIsAppReady] = useState<boolean>(false);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    setHideNav(pathname === "/");
+  }, [pathname]);
 
-  if (!loaded) {
-    return null;
+  if (!isAppReady) {
+    return <SplashScreenComponent onFinish={() => setIsAppReady(true)} />;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+    <ThemeProvider theme={CombinedTheme}>
+      <View style={{ flex: 1 }}>
+        {!hideNav && <DynamicHeader />}
+        {/* <ScrollView
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 ,backgroundColor: CombinedTheme.colors.background}}
+          keyboardShouldPersistTaps="always"
+        > */}
+          <Container>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
+              <Stack.Screen name="about" />
+              <Stack.Screen name="(tabs)" />
+            </Stack>
+          </Container>
+        {/* </ScrollView> */}
+      </View>
     </ThemeProvider>
   );
 }

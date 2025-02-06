@@ -8,6 +8,21 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "expoConfig": {
+      "extra": {
+        "API_URL": "https://api.example.com",
+        "DEBUG": true,
+        "TEST_DATA": "THIS_IS_TEST"
+      }
+    },
+    "expo": {
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#1b1b1f"
+      }
+    },
+
     "ios": {
       "supportsTablet": true
     },
