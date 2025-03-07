@@ -1,14 +1,25 @@
-import { ThemedStyles } from "@/constants/ColoredStyle";
-import { CombinedTheme } from "@/constants/Colors";
-import { LandingImage, Logo } from "@/constants/Icons";
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
-import { TrophyIcon } from "lucide-react-native";
-import AnimatedLandingImage from "@/constants/AnimatedLandingImage";
-import { Button } from "react-native-paper";
-import CustomButton from "@/components/button/CustomButton";
+import Container from "@/components/container/Container";
 import StepOne from "@/onBoardingProcess/Step1";
+import { Provider } from "react-native-paper";
 
 export default function Index() {
-  return <StepOne />;
+  return (
+    <Provider
+      settings={{
+        rippleEffectEnabled: true,
+      }}
+      theme={{
+        dark: true,
+        isV3: true,
+        roundness: 10,
+        animation: {
+          scale: 1,
+        },
+      }}
+    >
+      <Container>
+        <StepOne />
+      </Container>
+    </Provider>
+  );
 }

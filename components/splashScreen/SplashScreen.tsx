@@ -26,7 +26,7 @@ export default function SplashScreenComponent({
         source={require("@/assets/images/react-logo.png")}
         style={styles.logo}
       />
-      <Text style={styles.text}>Welcome to MyApp</Text>
+      <Text style={styles.text}>Welcome to Plan My Game</Text>
       <ActivityIndicator size="large" color={CombinedTheme.colors.primary} />
     </View>
   );

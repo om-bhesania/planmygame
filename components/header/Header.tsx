@@ -1,19 +1,22 @@
 "use client";
 
-import { useRouter, usePathname } from "expo-router";
+import { useRouter, usePathname, useNavigation } from "expo-router";
 import { useState, useEffect } from "react";
 import { Appbar } from "react-native-paper";
 import { StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
+import useCheckOs from "@/hooks/useCheckOs";
 
 const SportsHeader = () => {
   const [title, setTitle] = useState("BookMyGame");
   const pathname = usePathname();
   const router = useRouter();
+  const navigation: any = useNavigation();
+  const initialStepsCompleted =
+    navigation.getState().routes?.[0]?.params?.initialStepsCompleted ?? true;
 
   useEffect(() => {
-    // Update title based on current route
     switch (pathname) {
       case "/":
         setTitle("BookMyGame");
@@ -33,12 +36,10 @@ const SportsHeader = () => {
   }, [pathname]);
 
   const handleSearch = () => {
-    // Implement search functionality
     console.log("Search pressed");
   };
 
   const handleMenu = () => {
-    // Implement menu functionality
     console.log("Menu pressed");
   };
 
@@ -54,16 +55,29 @@ const SportsHeader = () => {
       color: Colors.textColor,
     },
   });
-
+const {os} = useCheckOs();
   return (
     <Appbar.Header style={styles.header}>
-      {pathname !== "/" && (
-        <Appbar.BackAction
-          onPress={() => router.back()}
-          color={Colors.textColor}
+      {pathname !== "/home" ? (
+        <>
+          <Appbar.BackAction
+            onPress={() => router.back()}
+            color={Colors.textColor}
+          />
+          <Appbar.Content title={title} titleStyle={styles.title} />
+        </>
+      ) : (
+        <Appbar.Content
+          title={title}
+          titleStyle={styles.title}
+          style={{
+            margin: 0,
+            padding: 0,
+            marginLeft: os === "ios" ? -90 : 16,
+          }}
         />
       )}
-      <Appbar.Content title={title} titleStyle={styles.title} />
+
       <Appbar.Action
         icon={() => (
           <MaterialCommunityIcons
@@ -72,7 +86,7 @@ const SportsHeader = () => {
             color={Colors.textColor}
           />
         )}
-        onPress={() => alert('test')}
+        onPress={() => alert("test")}
       />
       <Appbar.Action
         icon="magnify"

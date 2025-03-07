@@ -4,7 +4,6 @@ import { CombinedTheme } from "./Colors";
 export const ThemedStyles = StyleSheet.create({
   container: {
     paddingTop:10,
-    paddingHorizontal: 16,
     flex: 1,
     alignItems: "center",
     backgroundColor: CombinedTheme.colors.backgroundColor,

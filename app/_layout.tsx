@@ -4,7 +4,7 @@ import DynamicHeader from "@/components/header/Header";
 import { CombinedTheme } from "@/constants/Colors";
 import { Stack, usePathname } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ThemeProvider } from "react-native-paper"; 
+import { ThemeProvider } from "react-native-paper";
 import SplashScreenComponent from "../components/splashScreen/SplashScreen";
 
 export default function RootLayout() {
@@ -22,19 +22,20 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider theme={CombinedTheme}>
-      <View style={{ flex: 1 }}>
+      <View
+        style={{ flex: 1, backgroundColor: CombinedTheme.colors.background }}
+      >
         {!hideNav && <DynamicHeader />}
         {/* <ScrollView
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 ,backgroundColor: CombinedTheme.colors.background}}
           keyboardShouldPersistTaps="always"
         > */}
-          <Container>
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-              <Stack.Screen name="about" />
-              <Stack.Screen name="(tabs)" />
-            </Stack>
-          </Container>
+        <Container>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="home" />
+          </Stack>
+        </Container>
         {/* </ScrollView> */}
       </View>
     </ThemeProvider>
